@@ -1,0 +1,3 @@
+# /home/nbackup/.ssh/authorized_keys  (server) — ONE line per key.
+# restrict = no shell, no forwarding, no PTY; command = the only thing this key can run.
+restrict,command="sudo /usr/bin/rrsync -ro /mnt/data" ssh-ed25519 AAAA...your-public-key... n0d3-backup

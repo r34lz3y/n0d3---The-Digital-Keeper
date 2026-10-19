@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /Library/LaunchDaemons/com.n0d3.pull.plist  (Mac) — owner root:wheel, mode 644 -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.n0d3.pull</string>
+  <key>ProgramArguments</key>
+  <array><string>/usr/local/bin/n0d3-pull.sh</string></array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>3</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+</dict>
+</plist>

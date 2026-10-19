@@ -1,0 +1,46 @@
+# ~/nextcloud/compose.yaml  (server)
+# Secrets live in ~/nextcloud/.env (chmod 600):
+#   POSTGRES_PASSWORD=<generated with: openssl rand -hex 24>
+#   NC_ADMIN_USER / NC_ADMIN_PASSWORD  -> first install only; remove afterward
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: nextcloud
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  app:
+    image: nextcloud:stable-apache
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on: [db, redis]
+    volumes:
+      - ./html:/var/www/html                    # app + config on the SSD
+      - /mnt/data/nextcloud:/var/www/html/data  # user files on the USB drive
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: nextcloud
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: redis
+      NEXTCLOUD_TRUSTED_DOMAINS: 192.168.1.50 n0d3   # change: your server's IP + hostname
+      PHP_MEMORY_LIMIT: 512M
+      PHP_UPLOAD_LIMIT: 10G
+
+  cron:
+    image: nextcloud:stable-apache
+    restart: unless-stopped
+    entrypoint: /cron.sh
+    depends_on: [app]
+    volumes:
+      - ./html:/var/www/html
+      - /mnt/data/nextcloud:/var/www/html/data

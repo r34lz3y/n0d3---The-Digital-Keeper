@@ -1,0 +1,10 @@
+# /etc/systemd/system/n0d3-prebackup.timer  (server)
+[Unit]
+Description=Nightly pre-backup at 1:30 AM
+
+[Timer]
+OnCalendar=*-*-* 01:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,4 @@
+# /etc/sudoers.d/nbackup  (server) — edit with: sudo EDITOR=vim visudo -f /etc/sudoers.d/nbackup
+# Lets the backup user run exactly one command as root: read-only rrsync confined to /mnt/data.
+Defaults!/usr/bin/rrsync env_keep += "SSH_ORIGINAL_COMMAND"
+nbackup ALL=(root) NOPASSWD: /usr/bin/rrsync -ro /mnt/data

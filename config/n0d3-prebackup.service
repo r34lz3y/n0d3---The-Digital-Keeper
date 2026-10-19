@@ -1,0 +1,7 @@
+# /etc/systemd/system/n0d3-prebackup.service  (server)
+[Unit]
+Description=Prepare DB dumps and configs for nightly backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/n0d3-prebackup.sh
